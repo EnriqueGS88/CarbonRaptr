@@ -1,23 +1,24 @@
 import './styles/App.css';
 import twitterLogo from './assets/twitter-logo.svg';
-import osLogo from './assets/OS-logo-Blue.svg';
+
 import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
 // ** rename abi
 // ** get abi of Toucan Protocol
-import myEpicNFT from './utils/MyEpicNFT.json';
+import offsetHelper from './utils/offsetHelper.json';
 
 // Constants
-const CONTRACT_ADDRESS = "0xAfa865EEFF351a34950BBC4975222208355640DB";
+// Contract for Toucan Offset 
+const CONTRACT_ADDRESS = "0xFAFcCd01C395e4542BEed819De61f02f5562fAEa";
 // ** delete bldspc
-const BLDSPC_HANDLE = '_buildspace';
+
 const MY_HANDLE = 'EnriqueGzs'
 const TWITTER_ROOT = `https://twitter.com/`;
 // ** Delete buildspace, OS and Rarible
-const BLDSPC_TWITTER = `${TWITTER_ROOT}${BLDSPC_HANDLE}`;
+
 const MY_TWITTER = `${TWITTER_ROOT}${MY_HANDLE}`;
-const OPENSEA_LINK = `https://testnets.opensea.io/collection/epitaphs-generator-6qjc7caqv8`;
-const RARIBLE_LINK = 'https://rinkeby.rarible.com/token/INSERT_CONTRACT_ADDRESS_HERE:INSERT_TOKEN_ID_HERE';
+
+
 
 // ** rename const
 const TOTAL_MINT_COUNT = 100566;
@@ -47,11 +48,11 @@ const App = () => {
       const provider = new ethers.providers.Web3Provider(ethereum);
       const signer = provider.getSigner();
 
-      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNFT.abi, signer);
+      const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, offsetHelper.abi, signer);
 
       // ** why mintedTokens refers to .name() method
       // ** fix this part with the new contract from Toucan
-      let mintedTokens = await connectedContract.name();
+      let mintedTokens = await connectedContract.contractRegistryAddress();
       console.log(`There has been ${mintedTokens} tokens minted`)
 
 
@@ -121,7 +122,7 @@ const App = () => {
         // same content again
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
-        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNFT.abi, signer);
+        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, offsetHelper.abi, signer);
 
         // here begins the listener, the special part
         // This captures the event when the Contracts throws it
@@ -156,9 +157,9 @@ const App = () => {
         const provider = new ethers.providers.Web3Provider(ethereum);
         const signer = provider.getSigner();
 
-        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNFT.abi, signer);
+        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, offsetHelper.abi, signer);
         // ** why are we calling the .name() method again ?
-        let mintedTokensAmount = await connectedContract.name();
+        let mintedTokensAmount = await connectedContract.contractRegistryAddress();
         console.log(`Now there are ${mintedTokensAmount} tokens minted`)
 
         return mintedTokensAmount;
@@ -188,7 +189,7 @@ const App = () => {
 
         // This interfaces the frontend with the contract
         // only 3 parameters are needed
-        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, myEpicNFT.abi, signer);
+        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, offsetHelper.abi, signer);
         console.log("going to pop wallet now to pay gas...");
 
         let nftTxn = await connectedContract.makeAnEpicNFT();
