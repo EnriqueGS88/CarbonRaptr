@@ -192,7 +192,12 @@ const App = () => {
         const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, offsetHelper.abi, signer);
         console.log("going to pop wallet now to pay gas...");
 
-        let nftTxn = await connectedContract.makeAnEpicNFT();
+        // Polygon contract
+        let poolTokenAddress = '0xd838290e877e0188a4a44700463419ed96c16107';
+        // Amount of TCO2 to offset
+        let amountToOffset = 1;
+
+        let nftTxn = await connectedContract.autoOffsetUsingETH( poolTokenAddress, amountToOffset );
 
         console.log("Mining... please wait");
         await nftTxn.wait();
