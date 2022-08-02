@@ -64,8 +64,9 @@ const App = () => {
     console.log("Connected to chain ", chainId);
 
     const rinkebyChainId = "0x4";
-    if (chainId !== 'rinkebyChainId') {
-      alert("In Metamask you need to change your network to Rinkeby");
+    const polygonChainId = "0x89";
+    if (chainId !== polygonChainId) {
+      alert("In Metamask you need to change your network to Polygon");
     }
 
     // check if we are authorized to access the wallet
@@ -202,7 +203,8 @@ const App = () => {
         console.log("Mining... please wait");
         await nftTxn.wait();
 
-        console.log(`Mined at https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+        // console.log(`Mined at https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
+        console.log(`Mined at https://polygonscan.com/tx/${nftTxn.hash}`);
 
       } else {
         console.log("ethereum object does not exist");
